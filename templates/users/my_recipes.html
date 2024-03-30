@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% block user_recipes %}
+  
+<div class="col-sm-6">
+    <ul class="list-group" id="recipes">
+
+      {% for recipe in recipes %}
+
+        <li class='me-3'>
+          {{ recipe.title }}
+        </li>
+
+      {% endfor %}
+
+    </ul>
+  </div>
+
+{% endblock %}

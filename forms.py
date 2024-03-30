@@ -27,7 +27,7 @@ class SignUpForm(FlaskForm):
     )
     password = PasswordField(
         "Password",
-        validators=[InputRequired(), Length(min=6, max=50)],
+        validators=[InputRequired(), Length(min=6, max=150)],
     )
     email = StringField(
         "Email",
@@ -46,9 +46,24 @@ class SignUpForm(FlaskForm):
     )
     
 
-
-
 class DeleteForm(FlaskForm):
     """Delete form -- this form is intentionally blank."""
+
+
+class SearchForm(FlaskForm):
+    """Search for Recipes using API"""
     
+    title = StringField(
+        "Name",
+        validators=[InputRequired(), Length(max=45)],
+    )
+    intolerances = StringField(
+        "Any Food Intolerances?",
+        validators=[Optional()],
+    )
+    includeIngrediants = StringField(
+        "What ingredients should be included?",
+        validators=[Optional()],
+    )
+
     
