@@ -13,19 +13,20 @@ class User(db.Model):
     
     __tablename__= 'users'
     
-    username= db.Column(db.String(20), nullable= False, primary_key=True)
-    password= db.Column(db.String(20), nullable=False)
-    email= db.Column(db.String(45), unique=True, nullable= False)
+    id= db.Column(db.Integer, primary_key= True)
+    username= db.Column(db.String(20), nullable= False)
+    password= db.Column(db.String(150), nullable=False)
+    email= db.Column(db.String(20), unique=True, nullable= False)
     first_name= db.Column(db.String(20), nullable=False)
     last_name= db.Column(db.String(20), nullable=False)
-    image_url= db.Column(db.Text)
+    image_url= db.Column(db.Text, default= DEFAULT_IMAGE_USER)
         
     def image_url(self):
         return self.image_url or DEFAULT_IMAGE_USER
     
     
     @classmethod
-    def register(cls, username, password, first_name, last_name, email):
+    def signup(cls, username, password, first_name, last_name, email, image_url):
         """Register new user, and hash their password"""
         
         hashed= bcrypt.generate_password_hash(password)
@@ -35,7 +36,8 @@ class User(db.Model):
             password=hashed_utf8,
             first_name= first_name,
             last_name=last_name,
-            email=email
+            email=email,
+            image_url= image_url
         )  
         
         db.session.add(user)

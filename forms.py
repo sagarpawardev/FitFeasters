@@ -10,15 +10,15 @@ class LoginForm(FlaskForm):
 
     username = StringField(
         "Username",
-        validators=[InputRequired(), Length(min=1, max=20)],
+        validators=[InputRequired()],
     )
     password = PasswordField(
         "Password",
-        validators=[InputRequired(), Length(min=6, max=20)],
+        validators=[InputRequired(), Length(min=6)],
     )
 
 
-class RegisterForm(FlaskForm):
+class SignUpForm(FlaskForm):
     """User registration form."""
 
     username = StringField(
@@ -27,7 +27,7 @@ class RegisterForm(FlaskForm):
     )
     password = PasswordField(
         "Password",
-        validators=[InputRequired(), Length(min=6, max=20)],
+        validators=[InputRequired(), Length(min=6, max=50)],
     )
     email = StringField(
         "Email",
@@ -41,6 +41,10 @@ class RegisterForm(FlaskForm):
         "Last Name",
         validators=[InputRequired(), Length(max=30)],
     )
+    image_url= StringField(
+        '(Optional) Image URL'
+    )
+    
 
 
 
