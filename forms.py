@@ -61,7 +61,7 @@ class SearchForm(FlaskForm):
         "Any Food Intolerances?",
         validators=[Optional()],
     )
-    includeIngrediants = StringField(
+    includeIngredients = StringField(
         "What ingredients should be included?",
         validators=[Optional()],
     )

@@ -1,4 +1,4 @@
-import os
+import os, requests
 from flask import Flask, request, render_template, redirect, flash, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.exceptions import Unauthorized
@@ -8,8 +8,8 @@ from models import db, connect_db, User
 
 
 CURR_USER_KEY = "curr_user"
-API_KEY = 'Y43cb4f5704da4cfe9d4d261fbb40c746'
-BASE_URL = 'https://api.spoonacular.com/recipes/complexSearch?'
+API_KEY = '43cb4f5704da4cfe9d4d261fbb40c746'
+BASE_URL = 'https://api.spoonacular.com/recipes/complexSearch'
 
 app = Flask(__name__)
 
@@ -145,21 +145,23 @@ def search():
     """Handle recipe search."""
     form = SearchForm()
     if form.validate_on_submit():
-        title = form.name.data
+        title = form.title.data
         intolerances = form.intolerances.data
-        include_ingrediants = form.include_ingrediants.data
+        includeIngredients = form.includeIngredients.data
         
-        query = f'{title}intolerances={intolerances}includeIngrediants={include_ingrediants}'
-        endpoint = f'https://api.spoonacular.com/recipes/findByIngredients?apiKey={API_KEY}&number=5&query={query}'
+        query = f'{title}&intolerances={intolerances}&includeIngredients={includeIngredients}'
+        endpoint = f'https://api.spoonacular.com/recipes/complexSearch?apiKey={API_KEY}&number=5&query={query}'
         response = requests.get(endpoint)
-        
+        print(response.status_code)
+        print('*****************COURTNEY****************')
+        print(endpoint)
         if response.status_code == 200:
             data = response.json()
-            return render_template('search_results.html', recipes=data)
+            return render_template('/users/search_results.html', recipes=data)
         else:
             return 'Failed to fetch data from Spoonacular API', 500
 
-    return render_template('search_form.html', form=form)
+    return render_template('/users/search_form.html', form=form)
     
 
 
