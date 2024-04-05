@@ -4,5 +4,18 @@
 
 <p> {{ recipes }} </p>
 
+{% for recipe in recipes %}
+            <div class="col-md-4">
+                <div class="card recipe-card">
+                    <img src="{{ recipe.image }}" class="card-img-top" alt="{{ recipe.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ recipe.title }}</h5>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
 
 {% endblock %}

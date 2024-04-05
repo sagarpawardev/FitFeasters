@@ -45,6 +45,14 @@ class SignUpForm(FlaskForm):
         '(Optional) Image URL'
     )
     
+class UserEditForm(FlaskForm):
+    """form to edit user"""
+    
+    username = StringField('Username', validators=[InputRequired()])
+    email = StringField('E-mail', validators=[InputRequired(), Email()])
+    password = PasswordField('Password', validators=[Length(min=6)])
+    image_url = StringField('(Optional) Image URL')
+
 
 class DeleteForm(FlaskForm):
     """Delete form -- this form is intentionally blank."""

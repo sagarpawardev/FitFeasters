@@ -113,12 +113,47 @@ def logout():
 @app.route("/users/<username>")
 def show_user(username):
     """Example page for logged-in-users."""
-    if "username" not in session or username != session['username']:
-        raise Unauthorized()
 
+    if CURR_USER_KEY not in session or str(username) != str(session[CURR_USER_KEY]):
+        raise Unauthorized()
+    
     user = User.query.get(username)
     form = DeleteForm()
-    return render_template("/homepage.html", user=user, form=form)
+    return render_template("/users/my_recipes.html", user=user, form=form)
+
+@app.route('/users/<username>/my_recipes.html')
+def show_my_recipes(username):
+    if CURR_USER_KEY not in session:
+        raise Unauthorized()
+    
+    user = User.query.get(username)
+    form = DeleteForm()
+    
+    return render_template('/users/my_recipes.html', user=user)
+
+@app.route('/user/edit_user.html')
+def edit_profile():
+    """Update profile for current user."""
+
+    if not g.user:
+        flash('Access unauthorized.', "danger")
+        return redirect('/')
+    
+    user= g.user
+    form= UserEditForm(obj=user)
+    
+    if form.validate_on_submit():
+        if User.authenticate(user.username, form.password.data):
+            user.username=form.username.data
+            user.email= form.email.data
+            user.image_url= form.image_url.data or "DEFAULT_IMAGE_USER"
+         
+            
+            db.session.commit()
+            return redirect(f'/users/{user.id}')
+        flash('Wrong password, please try again', 'danger')
+        
+    return render_template('users/edit_user.html', form=form, user_id=user.id)
 
 @app.route("/users/<username>/delete", methods=["POST"])
 def remove_user(username):
@@ -164,54 +199,21 @@ def search():
     return render_template('/users/search_form.html', form=form)
     
 
-
-# @app.route('/search', methods=['POST'])
-# def get_query():
-#     # Now 'query' contains the search query entered by the user
-#     query = request.form.get('query')
+@app.route('/?query=<query>', methods=["POST"])
+def general_search(query):
+    """Handle general searches"""
     
-#     return render_template('search_results.html', query=query)
-
-# @app.route('/?<query>', methods=['GET', 'POST'])
-# def search():
+    endpoint = f'https://api.spoonacular.com/recipes/complexSearch?apiKey={API_KEY}&number=5&query={query}'
+    response = requests.get(endpoint)
     
-#     if request.method == 'POST':
-#         query = request.form.get('query')
+    print(response.status_code)
+    print('*****************COURTNEY****************')
+    print(endpoint)
+    if response.status_code == 200:
+        data = response.json()
+        return render_template('/users/search_results.html', recipes=data)
+    else:
+        return 'Failed to fetch data from Spoonacular API', 500
+
+    return render_template('/users/search_form.html', form=form)
         
-#         # Make GET request to Spoonacular API
-#         endpoint = f'https://api.spoonacular.com/recipes/findByIngredients?apiKey={API_KEY}&number=5&query={query}'
-#         response = requests.get(endpoint)
-        
-#         if response.status_code == 200:
-#             data = response.json()
-#             return render_template('search_results.html', recipes=data)
-#         else:
-#             return 'Failed to fetch data from Spoonacular API', 500
-
-#     # Render the search form template
-#     return render_template('search_form.html')
-
-# # API_KEY = 'Y43cb4f5704da4cfe9d4d261fbb40c746'
-# # endpoint = 'https://api.spoonacular.com/recipes/findByIngredients/'
-
-# # params = {
-# #     'number': 5,  # Number of recipes to fetch
-# #     'apiKey': API_KEY
-# # }
-
-# # # Make GET request to Spoonacular API
-# # response = request.get(endpoint, params=params)
-
-# # # Check if request was successful (status code 200)
-# # if response.status_code == 200:
-# #     # Extract data from response 
-# #     data = response.json()
-    
-# #     # Process and store data in your database
-# #     for recipe in data['recipes']:
-# #         recipe_id = recipe['id']
-# #         recipe_title = recipe['title']
-       
-# #         print(f"Recipe ID: {recipe_id}, Title: {recipe_title}")
-# # else:
-# #     print(f"Failed to fetch data: {response.status_code}")

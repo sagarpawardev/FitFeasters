@@ -61,6 +61,7 @@ class Recipes(db.Model):
     __tablename__ = 'recipes'
     
     id= db.Column(db.Integer, primary_key = True)
+    recipe_id= db.Column(db.Integer, nullable=False)
     title=db.Column(db.Text, nullable=False)
     image_url=db.Column(db.Text)
     ready_in_minutes= db.Column(db.Integer)
