@@ -2,21 +2,27 @@
 
 {% block content %}
 
-{% for recipe in recipes %}
-            <div class="col-md-4">
-                <div class="card recipe-card">
-                    <img src="{{ recipe.image }}" class="card-img-top" alt="{{ recipe.title }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ recipe.title }}</h5>
-                        <li>
-                            <a href="{{ url_for('recipe_details', recipe_id=recipe.id) }}">{{ recipe.title }}</a>
-                        </li>
+{% if recipes %}
+    {% for recipe in recipes %}
+                <div class="col-md-4">
+                    <div class="card recipe-card">
+                        <img src="{{ recipe.image }}" class="card-img-top" alt="{{ recipe.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ recipe.title }}</h5>
+                            <li>
+                                <a href="{{ url_for('recipe_details', recipe_id=recipe.id) }}">{{ recipe.title }}</a>
+                            </li>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
-    </div>
+{% else %}
+<div class="col-md-12">
+    <h3> Sorry, no matching recipes found.</h3>
+</div>
+{% endif %}
 
 
 {% endblock %}

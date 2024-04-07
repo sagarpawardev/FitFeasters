@@ -3,7 +3,7 @@ from flask import Flask, request, render_template, redirect, flash, session, g, 
 from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.exceptions import Unauthorized
 from sqlalchemy.exc import IntegrityError
-from forms import SignUpForm, LoginForm, DeleteForm, SearchForm
+from forms import SignUpForm, LoginForm, DeleteForm, SearchForm, UserEditForm
 from models import db, connect_db, User, Recipes
 
 
@@ -104,7 +104,7 @@ def login():
 @app.route("/logout")
 def logout():
     """Logout route."""
-    session.pop("curr_user")
+    session.pop(CURR_USER_KEY)
     flash("You have been logged out.", "success")
     return redirect("/login")
 
@@ -119,7 +119,7 @@ def show_user(username):
     
     user = User.query.get(username)
     form = DeleteForm()
-    return render_template("/users/my_recipes.html", user=user, form=form)
+    return render_template("/users/homepage.html", user=user, form=form)
 
 @app.route('/users/<username>/my_recipes.html')
 def show_my_recipes(username):
@@ -131,29 +131,32 @@ def show_my_recipes(username):
     
     return render_template('/users/my_recipes.html', user=user)
 
-@app.route('/user/edit_user.html')
+
+
+@app.route('/user/edit_user.html', methods=['GET', 'POST'])
 def edit_profile():
     """Update profile for current user."""
-
-    if not g.user:
-        flash('Access unauthorized.', "danger")
-        return redirect('/')
     
-    user= g.user
-    form= UserEditForm(obj=user)
+    if CURR_USER_KEY not in session:
+        return redirect('/login')
+    
+    username = session.get('user.username')
+    user = User.query.filter_by(username=username).first_or_404()
+    form = UserEditForm(obj=user)
     
     if form.validate_on_submit():
         if User.authenticate(user.username, form.password.data):
-            user.username=form.username.data
-            user.email= form.email.data
-            user.image_url= form.image_url.data or "DEFAULT_IMAGE_USER"
-         
+            user.username = form.username.data
+            user.email = form.email.data
+            user.image_url = form.image_url.data or "DEFAULT_IMAGE_USER"
             
             db.session.commit()
-            return redirect(f'/users/{user.id}')
-        flash('Wrong password, please try again', 'danger')
-        
-    return render_template('users/edit_user.html', form=form, user_id=user.id)
+            flash('Profile updated successfully', 'success')
+            return redirect(f'/users/homepage.html')
+        else:
+            flash('Wrong password, please try again', 'danger')
+    
+    return render_template('users/edit_user.html', form=form, user=user)
 
 @app.route("/users/<username>/delete", methods=["POST"])
 def remove_user(username):
