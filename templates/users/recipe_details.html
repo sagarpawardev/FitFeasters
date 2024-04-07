@@ -6,12 +6,18 @@
 {% endblock %}
 
 {% block content %}
+
 <body>
     <h1>{{ recipe.title }}</h1>
     <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
-    <p>{{ recipe.summary }}</p>
-    <p> {{ formatted_desciption }} </p>
-    <!-- Add more details here as needed -->
+    <li>Ready in {{ recipe.readyInMinutes }} minutes.</li>
+    <li>Weight Watcher Points: {{ recipe.weightWatcherSmartPoints }}</li>
+    <li>Servings: {{ recipe.servings }}</li>
+    <li>Gluten Free: {{ recipe.glutenFree }}</li>
+    <li>Vegetarian: {{ recipe.vegetarian }}</li>
+
+    <a href="{{ recipe.sourceUrl }}">{{ recipe.sourceUrl }}</a>
+
 </body>
 
 
