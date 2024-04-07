@@ -1,10 +1,10 @@
 import os, requests
-from flask import Flask, request, render_template, redirect, flash, session, g
+from flask import Flask, request, render_template, redirect, flash, session, g, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.exceptions import Unauthorized
 from sqlalchemy.exc import IntegrityError
 from forms import SignUpForm, LoginForm, DeleteForm, SearchForm
-from models import db, connect_db, User
+from models import db, connect_db, User, Recipes
 
 
 CURR_USER_KEY = "curr_user"
@@ -18,7 +18,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///fitfeasters_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SECRET_KEY'] = "food4thesoul"
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 # Debug toolbar
 debug = DebugToolbarExtension(app)
@@ -187,33 +187,72 @@ def search():
         query = f'{title}&intolerances={intolerances}&includeIngredients={includeIngredients}'
         endpoint = f'https://api.spoonacular.com/recipes/complexSearch?apiKey={API_KEY}&number=5&query={query}'
         response = requests.get(endpoint)
-        print(response.status_code)
-        print('*****************COURTNEY****************')
-        print(endpoint)
+      
         if response.status_code == 200:
             data = response.json()
-            return render_template('/users/search_results.html', recipes=data)
-        else:
-            return 'Failed to fetch data from Spoonacular API', 500
-
-    return render_template('/users/search_form.html', form=form)
-    
-
-@app.route('/?query=<query>', methods=["POST"])
-def general_search(query):
-    """Handle general searches"""
-    
-    endpoint = f'https://api.spoonacular.com/recipes/complexSearch?apiKey={API_KEY}&number=5&query={query}'
-    response = requests.get(endpoint)
-    
-    print(response.status_code)
-    print('*****************COURTNEY****************')
-    print(endpoint)
-    if response.status_code == 200:
-        data = response.json()
-        return render_template('/users/search_results.html', recipes=data)
+        
+        # Save fetched recipes to the database and display results
+        for recipe_data in data['results']:
+            recipe = Recipes(
+                recipe_id= recipe_data['id'],
+                title=recipe_data['title'],
+                image_url=recipe_data['image']
+                
+            )
+            db.session.add(recipe)
+            db.session.commit()
+        
+        return render_template('/users/search_results.html', recipes=data['results'])
     else:
         return 'Failed to fetch data from Spoonacular API', 500
 
     return render_template('/users/search_form.html', form=form)
+    
+
+@app.route('/search_food', methods=["POST"])
+def general_search():
+    """Handle general searches"""
+   
+    # print(request.args.get('query'))
+    # query=request.args.get('query')
+    query= request.form.get('query')
+    endpoint = f'https://api.spoonacular.com/recipes/complexSearch?apiKey={API_KEY}&number=5&query={query}'
+    response = requests.get(endpoint)
+    
+    if response.status_code == 200:
+        data = response.json()
         
+        # Save fetched recipes to the database and display results
+        for recipe_data in data['results']:
+            recipe = Recipes(
+                recipe_id= recipe_data['id'],
+                title=recipe_data['title'],
+                image_url=recipe_data['image']
+                
+            )
+            db.session.add(recipe)
+            db.session.commit()
+            
+        return render_template('/users/search_results.html', recipes=data['results'])
+    else:
+        return 'Failed to fetch data from Spoonacular API', 500
+
+    return render_template('/users/search_form.html', form=form)
+
+
+@app.route('/recipe_details/<int:recipe_id>')
+def recipe_details(recipe_id):
+    """Handle request for fetching details of a recipe"""
+    endpoint = f'https://api.spoonacular.com/recipes/{recipe_id}/information?apiKey={API_KEY}'
+    response = requests.get(endpoint)
+    
+    if response.status_code == 200:
+        recipe_details = response.json()
+        
+        
+
+        return render_template('/users/recipe_details.html', recipe=recipe_details)
+    else:
+        return 'Failed to fetch recipe details from Spoonacular API', 500
+
+

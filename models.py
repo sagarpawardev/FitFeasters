@@ -64,12 +64,8 @@ class Recipes(db.Model):
     recipe_id= db.Column(db.Integer, nullable=False)
     title=db.Column(db.Text, nullable=False)
     image_url=db.Column(db.Text)
-    ready_in_minutes= db.Column(db.Integer)
-    healthscore= db.Column(db.Integer)
-    recipe_instructions= db.Column(db.Text)
-    
-    def image_url(self):
-        return self.image_url or DEFAULT_IMAGE_FOOD
+   
+
 
 def connect_db(app):
     """connect this db to flask app"""
