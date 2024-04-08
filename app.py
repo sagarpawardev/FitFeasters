@@ -121,15 +121,15 @@ def show_user(username):
     form = DeleteForm()
     return render_template("/users/homepage.html", user=user, form=form)
 
-@app.route('/users/<username>/my_recipes.html')
-def show_my_recipes(username):
-    if CURR_USER_KEY not in session:
-        raise Unauthorized()
+# @app.route('/users/<username>/my_recipes.html')
+# def show_my_recipes(username):
+#     if CURR_USER_KEY not in session:
+#         raise Unauthorized()
     
-    user = User.query.get(username)
-    form = DeleteForm()
+#     user = User.query.get(username)
+#     form = DeleteForm()
     
-    return render_template('/users/my_recipes.html', user=user)
+#     return render_template('/users/my_recipes.html', user=user)
 
 
 
@@ -142,6 +142,7 @@ def edit_profile():
     
     username = session.get('user.username')
     user = User.query.filter_by(username=username).first_or_404()
+    
     form = UserEditForm(obj=user)
     
     if form.validate_on_submit():
