@@ -55,6 +55,7 @@ def homepage():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     """Handle user signup."""
+
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
 
@@ -131,19 +132,21 @@ def show_user(username):
     
 #     return render_template('/users/my_recipes.html', user=user)
 
-
-
-@app.route('/user/edit_user.html', methods=['GET', 'POST'])
-def edit_profile():
+@app.route('/users/edit_user', methods=['GET', 'POST'])
+def edit_user():
     """Update profile for current user."""
     
     if CURR_USER_KEY not in session:
         return redirect('/login')
     
-    username = session.get('user.username')
-    user = User.query.filter_by(username=username).first_or_404()
+    username = str(session.get(CURR_USER_KEY))
+    user = User.query.filter_by(id=username).first_or_404()
     
-    form = UserEditForm(obj=user)
+    print(user)
+    print("*******************************************")
+    form = UserEditForm()
+    form.username = user.username
+    print(form)
     
     if form.validate_on_submit():
         if User.authenticate(user.username, form.password.data):
@@ -158,6 +161,8 @@ def edit_profile():
             flash('Wrong password, please try again', 'danger')
     
     return render_template('users/edit_user.html', form=form, user=user)
+   
+
 
 @app.route("/users/<username>/delete", methods=["POST"])
 def remove_user(username):
