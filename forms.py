@@ -1,7 +1,7 @@
 """Forms for fitfeasters app."""
 
 from wtforms import StringField, PasswordField
-from wtforms.validators import InputRequired, Length, NumberRange, Email, Optional
+from wtforms.validators import InputRequired, Length, NumberRange, Email, Optional, EqualTo
 from flask_wtf import FlaskForm
 
 
@@ -27,7 +27,7 @@ class SignUpForm(FlaskForm):
     )
     password = PasswordField(
         "Password",
-        validators=[InputRequired(), Length(min=6, max=150)],
+        validators=[InputRequired(), Length(min=6, max=250)],
     )
     email = StringField(
         "Email",
@@ -47,10 +47,11 @@ class SignUpForm(FlaskForm):
     
 class UserEditForm(FlaskForm):
     """form to edit user"""
-    
+
     username = StringField('Username', validators=[InputRequired()])
-    email = StringField('E-mail', validators=[InputRequired(), Email()])
-    password = PasswordField('Password', validators=[Length(min=6)])
+    email = StringField('Email', validators=[InputRequired(), Email()])
+    password = PasswordField('New Password', validators=[Length(min=6)])
+    confirm_password = PasswordField('Confirm New Password', validators=[EqualTo('password')])
     image_url = StringField('(Optional) Image URL')
 
 

@@ -2,6 +2,7 @@ import os, requests
 from flask import Flask, request, render_template, redirect, flash, session, g, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.exceptions import Unauthorized
+from werkzeug.security import generate_password_hash
 from sqlalchemy.exc import IntegrityError
 from forms import SignUpForm, LoginForm, DeleteForm, SearchForm, UserEditForm
 from models import db, connect_db, User, Recipes
@@ -122,16 +123,8 @@ def show_user(username):
     form = DeleteForm()
     return render_template("/users/homepage.html", user=user, form=form)
 
-# @app.route('/users/<username>/my_recipes.html')
-# def show_my_recipes(username):
-#     if CURR_USER_KEY not in session:
-#         raise Unauthorized()
-    
-#     user = User.query.get(username)
-#     form = DeleteForm()
-    
-#     return render_template('/users/my_recipes.html', user=user)
 
+   
 @app.route('/users/edit_user', methods=['GET', 'POST'])
 def edit_user():
     """Update profile for current user."""
@@ -139,29 +132,22 @@ def edit_user():
     if CURR_USER_KEY not in session:
         return redirect('/login')
     
-    username = str(session.get(CURR_USER_KEY))
-    user = User.query.filter_by(id=username).first_or_404()
-    
-    print(user)
-    print("*******************************************")
-    form = UserEditForm()
-    form.username = user.username
-    print(form)
+    user = User.query.get(session.get(CURR_USER_KEY))
+    form = UserEditForm(obj=user)
     
     if form.validate_on_submit():
-        if User.authenticate(user.username, form.password.data):
             user.username = form.username.data
             user.email = form.email.data
-            user.image_url = form.image_url.data or "DEFAULT_IMAGE_USER"
+            if form.password.data:
+                # Hash the new password before storing it
+                hashed_password = generate_password_hash(form.password.data)
+                user.password = hashed_password
             
             db.session.commit()
             flash('Profile updated successfully', 'success')
-            return redirect(f'/users/homepage.html')
-        else:
-            flash('Wrong password, please try again', 'danger')
+            return redirect('/search_form')
     
     return render_template('users/edit_user.html', form=form, user=user)
-   
 
 
 @app.route("/users/<username>/delete", methods=["POST"])
@@ -258,10 +244,20 @@ def recipe_details(recipe_id):
     if response.status_code == 200:
         recipe_details = response.json()
         
-        
 
         return render_template('/users/recipe_details.html', recipe=recipe_details)
     else:
         return 'Failed to fetch recipe details from Spoonacular API', 500
 
 
+########################Future Functionality ##########################################
+
+# @app.route('/users/<username>/my_recipes.html')
+# def show_my_recipes(username):
+#     if CURR_USER_KEY not in session:
+#         raise Unauthorized()
+    
+#     user = User.query.get(username)
+#     form = DeleteForm()
+    
+#     return render_template('/users/my_recipes.html', user=user)
