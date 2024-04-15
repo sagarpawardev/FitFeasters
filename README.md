@@ -9,7 +9,7 @@ Welcome to Fit Feasters! FitFeasters is a web application built with Flask, desi
 - If the meal is vegetarian
 - A link to the meal's recipe 
 
-![Opening UI page](file:///Users/cdaly/Pictures/Photos%20Library.photoslibrary/originals/8/8BB9A641-F258-4A27-B6A5-F7E81FE3E3FB.jpeg)
+![Opening UI page](https://private-user-images.githubusercontent.com/141876079/322639700-47f207e8-0cda-4d4b-ba7c-06318d7a0ab9.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTMyMTg1NDUsIm5iZiI6MTcxMzIxODI0NSwicGF0aCI6Ii8xNDE4NzYwNzkvMzIyNjM5NzAwLTQ3ZjIwN2U4LTBjZGEtNGQ0Yi1iYTdjLTA2MzE4ZDdhMGFiOS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwNDE1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDQxNVQyMTU3MjVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1hMTFlYTM1NDBmN2Q1NzI5MWEyNmFlMWY4ODcyZjdlZWY5YTY0ZGRkY2JkYTZiMmRjNTVkZjNjZDdhNjE5MTg4JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.cYU7ejdUx9TK80KS21pz3l2tjH1mVH9KX3yq6R7T84U)
 
 
 link to api---> https://api.spoonacular.com
