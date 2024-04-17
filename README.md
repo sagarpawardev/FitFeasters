@@ -30,9 +30,9 @@ Make sure you have the following installed on your machine:
 -SQLAlchemy
 
 Installation:
--Clone this repository to your local machine:
+-Go to this repository to your local machine:
 
-    git clone https://github.com/yourusername/fitfeasters.git
+    https://github.com/courtneydaly1/FitFeasters.git 
 
 Navigate to the project directory:
 
@@ -42,6 +42,9 @@ Install the required Python packages:
 
     pip install -r requirements.txt
 
+Create the database in the terminal:
+    createdb fitfeasters_db
+
 Configuration:
 Obtain an API key from Spoonacular by signing up ![here](https://spoonacular.com/food-api/pricing).
 
@@ -50,7 +53,7 @@ Replace API_KEY in app.py with your Spoonacular API key.
 
 Run the Flask application:
 
-    python app.py
+    flask run 
 
 Open your web browser and navigate to http://localhost:5000 to access FitFeasters.
 

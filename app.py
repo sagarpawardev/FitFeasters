@@ -180,7 +180,7 @@ def search():
         includeIngredients = form.includeIngredients.data
         
         query = f'{title}&intolerances={intolerances}&includeIngredients={includeIngredients}'
-        endpoint = f'https://api.spoonacular.com/recipes/complexSearch?apiKey={API_KEY}&number=5&query={query}'
+        endpoint = f'https://api.spoonacular.com/recipes/complexSearch?apiKey={API_KEY}&number=6&query={query}'
         response = requests.get(endpoint)
       
         if response.status_code == 200:
@@ -211,7 +211,7 @@ def general_search():
     # print(request.args.get('query'))
     # query=request.args.get('query')
     query= request.form.get('query')
-    endpoint = f'https://api.spoonacular.com/recipes/complexSearch?apiKey={API_KEY}&number=5&query={query}'
+    endpoint = f'https://api.spoonacular.com/recipes/complexSearch?apiKey={API_KEY}&number=6&query={query}'
     response = requests.get(endpoint)
     
     if response.status_code == 200:
