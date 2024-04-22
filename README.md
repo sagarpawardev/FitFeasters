@@ -1,5 +1,5 @@
 # FitFeasters
-##Nutritional info and recipes for foodies at home.
+Nutritional info and recipes for foodies at home.
 
 Welcome to Fit Feasters! FitFeasters is a web application built with Flask, designed to help users discover recipes based on their dietary preferences and ingredients they have on hand. User has inputs for the food name, any food intolerances (optional), and any ingredients which should be included (optional). That avocado is perfectly ripe, time to get recipes! User can also look up food recipe in the search box. After searching, the user is given 5 food images, clicking on one of the food links, the user is brought to a new page and given:
 - Time to prepare meal
@@ -9,7 +9,7 @@ Welcome to Fit Feasters! FitFeasters is a web application built with Flask, desi
 - If the meal is vegetarian
 - A link to the meal's recipe 
 
-##Screenshots of Fit Feasters
+Screenshots of Fit Feasters
 
 <img src="screenshots/1.png" width="324"> <br>
 <img src="screenshots/2.png" width="324"> <br> 
@@ -20,16 +20,16 @@ Welcome to Fit Feasters! FitFeasters is a web application built with Flask, desi
 
 link to api---> https://api.spoonacular.com
 
-##Getting Started:
+Getting Started:
 To get started with FitFeasters locally, follow these steps in the terminal:
 
-##Prerequisites:
+Prerequisites:
 Make sure you have the following installed on your machine:
 
-####Python (3.6 or higher)
-####Flask
-####Jinja
-####SQLAlchemy
+Python (3.6 or higher)
+Flask
+Jinja
+SQLAlchemy
 
 Installation:
 -Go to this repository to your local machine:
