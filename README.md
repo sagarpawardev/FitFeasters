@@ -9,7 +9,7 @@ Welcome to Fit Feasters! FitFeasters is a web application built with Flask, desi
 - If the meal is vegetarian
 - A link to the meal's recipe 
 
-Screenshots of Fit Feasters
+
 
 <img src="screenshots/1.png" width="324"> <br>
 <img src="screenshots/2.png" width="324"> <br> 
@@ -20,10 +20,10 @@ Screenshots of Fit Feasters
 
 link to api---> https://api.spoonacular.com
 
-Getting Started:
+Getting Started: <br>
 To get started with FitFeasters locally, follow these steps in the terminal:
 
-Prerequisites:
+Prerequisites: <br>
 Make sure you have the following installed on your machine:
 
 Python (3.6 or higher)
@@ -31,7 +31,7 @@ Flask
 Jinja
 SQLAlchemy
 
-Installation:
+Installation: <br>
 -Go to this repository to your local machine:
 
     https://github.com/courtneydaly1/FitFeasters.git 
