@@ -27,7 +27,6 @@ debug = DebugToolbarExtension(app)
 # Database setup
 connect_db(app)
 app.app_context().push()
-db.drop_all()
 db.create_all()
 
 #################################### User Sign up/login/logout
