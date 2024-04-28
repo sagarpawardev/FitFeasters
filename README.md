@@ -23,7 +23,7 @@ link to api---> https://api.spoonacular.com
 ## Getting Started: <br>
 To get started with FitFeasters locally, follow these steps in the terminal:
  
-## Prerequisites: <br>
+### Prerequisites: <br>
 Make sure you have the following installed on your machine:
 
 - Python (3.6 or higher)
@@ -31,24 +31,23 @@ Make sure you have the following installed on your machine:
 - Jinja
 - SQLAlchemy
 
-## Installation: <br>
-### Go to this repository to your local machine:
+### Installation: <br>
 
-    https://github.com/courtneydaly1/FitFeasters.git 
-
-### Navigate to the project directory:
-
-    cd fitfeasters
-
-### Install the required Python packages:
-
+Clone and go to this repository to your local machine:
+```bash
+git clone https://github.com/courtneydaly1/FitFeasters.git 
+cd fitfeasters
+```
+Install the required Python packages:
+    
     pip install -r requirements.txt
 
-### Create the database in the terminal:
+Create the database in the terminal:
+    
     createdb fitfeasters_db
 
-## Configuration:
-Obtain an API key from Spoonacular by signing up ![here](https://spoonacular.com/food-api/pricing).
+### Configuration:
+Obtain an API key from Spoonacular by signing up [here](https://spoonacular.com/food-api/pricing).
 
 Replace API_KEY in app.py with your Spoonacular API key.
 
