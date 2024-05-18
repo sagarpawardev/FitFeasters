@@ -60,10 +60,10 @@ Open your web browser and navigate to http://localhost:5000 to access FitFeaster
 
 ## Usage:
 
-Signup/Login: Create an account or login with existing credentials to start using the app.
-Search for Recipes: Use the search form to find recipes based on titles, ingredients, and dietary preferences.
-Update Profile: Update your profile information, including username, email, and profile picture.
-Logout: Logout from your account when you're done using the app.
+Signup/Login: Create an account or login with existing credentials to start using the app.<br>
+Search for Recipes: Use the search form to find recipes based on titles, ingredients, and dietary preferences.<br>
+Update Profile: Update your profile information, including username, email, and profile picture.<br>
+Logout: Logout from your account when you're done using the app.<br>
 
 ## Future Features:
 
