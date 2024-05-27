@@ -1,5 +1,5 @@
 {
-  "devCommand": "pip install -r requirements.txt && echo \"hello courtney\" ", 
- "buildCommand": "next build"
+  "installCommand": "pip install -r requirements.txt && echo \"hello courtney\" "
+
  
 }
