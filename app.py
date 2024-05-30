@@ -9,7 +9,7 @@ from models import db, connect_db, User, Recipes
 
 
 CURR_USER_KEY = "curr_user"
-API_KEY = 'b8460c13a2284642ab71cd37b417526f'
+API_KEY = '43cb4f5704da4cfe9d4d261fbb40c746'
 BASE_URL = 'https://api.spoonacular.com/recipes/complexSearch'
 
 app = Flask(__name__)
