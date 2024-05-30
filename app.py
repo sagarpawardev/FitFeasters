@@ -8,12 +8,6 @@ from forms import SignUpForm, LoginForm, DeleteForm, SearchForm, UserEditForm
 from models import db, connect_db, User, Recipes
 
 
-# Your existing Flask setup code here...
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
-
 
 CURR_USER_KEY = "curr_user"
 API_KEY = '43cb4f5704da4cfe9d4d261fbb40c746'
@@ -32,6 +26,11 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'food4thesoul')
 
 # Debug toolbar
 debug = DebugToolbarExtension(app)
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
 
 # Database setup
 connect_db(app)
