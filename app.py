@@ -15,11 +15,13 @@ BASE_URL = 'https://api.spoonacular.com/recipes/complexSearch'
 app = Flask(__name__)
 
 # Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///fitfeasters_db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
-app.config['SECRET_KEY'] = "food4thesoul"
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql:///fitfeasters_db')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'food4thesoul')
+
 
 # Debug toolbar
 debug = DebugToolbarExtension(app)
